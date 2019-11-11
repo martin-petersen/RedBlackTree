@@ -75,26 +75,23 @@ public class Node {
         return this.getParent().getSibling();
     }
 
-    public void insert(Node root, Node node) {
+    public void insert(Node node) {
         if (node.getValue() < this.getValue()) {
             if (this.getLeft() == null) {
                 node.setParent(this);
                 this.setLeft(node);
             } else {
-                this.insert(node);
+                this.getLeft().insert(node);
             }
         } else if (node.getValue() > this.getValue()) {
             if (this.getRight() == null) {
                 node.setParent(this);
                 this.setRight(node);
             } else {
-                this.insert(node);
+                this.getRight().insert(node);
             }
         }
-
         insertCasex(node);
-
-        while ()
     }
 
     public Node search(int value) {
@@ -140,6 +137,7 @@ public class Node {
     }
 
     private void insertCaseTwo(Node node) {
+        return;
     }
 
     private void insertCaseThree(Node node) {

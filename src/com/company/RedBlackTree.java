@@ -17,10 +17,16 @@ public class RedBlackTree {
 
     public void insert(Node node) {
         if(isEmpty()) {
+            node.setColor(false);
             this.root = node;
             return;
         }
         root.insert(node);
+
+        setRoot(node);
+        while (root.getParent() != null) {
+            setRoot(root.getParent());
+        }
     }
 
     public void insert(int value) {

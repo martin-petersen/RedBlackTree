@@ -42,6 +42,6 @@ public class RedBlackTree {
     }
 
     public void remove(int value) {
-
+        root.Delete(search(value));
     }
 }

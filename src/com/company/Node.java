@@ -222,118 +222,104 @@ public class Node {
         }
         novo.setParent(p);
     }
-}
 
-/*REPLACE DOS NODES -> void ReplaceNode(Node* n, Node* child) {
-        child->parent = n->parent;
-        if (n == n->parent->left) {
-            n->parent->left = child;
-        } else {
-            n->parent->right = child;
-        }
-    }
+    public void Delete(Node node) {
+        Node child = (node.getRight() == null) ? node.getLeft() : node.getRight();
+        assert(child != null);
 
-MÉTODO DE REMOÇÃO -> void DeleteOneChild(Node* n) {
-        // Precondition: n has at most one non-leaf child.
-        Node* child = (n->right == nullptr) ? n->left : n->right;
-        assert(child);
-
-        ReplaceNode(n, child);
-        if (n->color == BLACK) {
-            if (child->color == RED) {
-                child->color = BLACK;
+        ReplaceNode(node, child);
+        if (!node.isColor()) {
+            if (child.isColor()) {
+                child.setColor(false);
             } else {
                 DeleteCase1(child);
             }
         }
-        free(n);
     }
 
-DAQUI PRA BAIXO SÃO AS VALIDAÇÕES PARA O TIPO DE NÓ A SER DELETADO
-    void DeleteCase1(Node* n) {
-        if (n->parent != nullptr) {
-            DeleteCase2(n);
+    private void ReplaceNode(Node node, Node child) {
+        child.setParent(node.getParent());
+        if (node == node.getParent().getLeft()) {
+            node.getParent().setLeft(child);
+        } else {
+            node.getParent().setRight(child);
         }
     }
 
-    void DeleteCase2(Node* n) {
-        Node* s = GetSibling(n);
+    private void DeleteCase1(Node node) {
+        if(node.getParent() != null) {
+            DeleteCase2(node);
+        }
+    }
 
-        if (s->color == RED) {
-            n->parent->color = RED;
-            s->color = BLACK;
-            if (n == n->parent->left) {
-                RotateLeft(n->parent);
+    private void DeleteCase2(Node node) {
+        Node s = node.getSibling();
+
+        if(s.isColor()) {
+            node.getParent().setColor(true);
+            s.setColor(false);
+
+            if(node == node.getParent().getLeft()) {
+                rotateLeft(node.getParent());
             } else {
-                RotateRight(n->parent);
+                rotateRight(node.getParent());
             }
         }
-        DeleteCase3(n);
+        DeleteCase3(node);
     }
 
-    void DeleteCase3(Node* n) {
-        Node* s = GetSibling(n);
+    private void DeleteCase3(Node node) {
+        Node s = node.getSibling();
 
-        if ((n->parent->color == BLACK) && (s->color == BLACK) &&
-                (s->left->color == BLACK) && (s->right->color == BLACK)) {
-            s->color = RED;
-            DeleteCase1(n->parent);
+        if(!node.getParent().isColor() && !s.isColor() && !s.getLeft().isColor() && !s.getRight().isColor()) {
+            s.setColor(true);
+            DeleteCase1(node.getParent());
         } else {
-            DeleteCase4(n);
+            DeleteCase4(node);
         }
     }
 
-    void DeleteCase4(Node* n) {
-        Node* s = GetSibling(n);
+    private void DeleteCase4(Node node) {
+        Node s = node.getSibling();
 
-        if ((n->parent->color == RED) && (s->color == BLACK) &&
-                (s->left->color == BLACK) && (s->right->color == BLACK)) {
-            s->color = RED;
-            n->parent->color = BLACK;
+        if(node.getParent().isColor() && !s.isColor() && !s.getLeft().isColor() && !s.getRight().isColor()) {
+            s.setColor(true);
+            node.getParent().setColor(false);
         } else {
-            DeleteCase5(n);
+            DeleteCase5(node);
         }
     }
 
-    void DeleteCase5(Node* n) {
-        Node* s = GetSibling(n);
+    private void DeleteCase5(Node node) {
+        Node s = node.getSibling();
 
-        // This if statement is trivial, due to case 2 (even though case 2 changed
-        // the sibling to a sibling's child, the sibling's child can't be red, since
-        // no red parent can have a red child).
-        if (s->color == BLACK) {
-            // The following statements just force the red to be on the left of the
-            // left of the parent, or right of the right, so case six will rotate
-            // correctly.
-            if ((n == n->parent->left) && (s->right->color == BLACK) &&
-                    (s->left->color == RED)) {
-                // This last test is trivial too due to cases 2-4.
-                s->color = RED;
-                s->left->color = BLACK;
-                RotateRight(s);
-            } else if ((n == n->parent->right) && (s->left->color == BLACK) &&
-                    (s->right->color == RED)) {
-                // This last test is trivial too due to cases 2-4.
-                s->color = RED;
-                s->right->color = BLACK;
-                RotateLeft(s);
+        if(!s.isColor()) {
+            if(node == node.getParent().getLeft() && !s.getRight().isColor() && s.getLeft().isColor()) {
+                s.setColor(true);
+                s.getLeft().setColor(false);
+                rotateRight(s);
+            }
+            else if(node == node.getParent().getRight() && !s.getLeft().isColor() && s.getRight().isColor()) {
+                s.setColor(true);
+                s.getRight().setColor(false);
+                rotateLeft(s);
             }
         }
-        DeleteCase6(n);
+        DeleteCase6(node);
     }
 
-    void DeleteCase6(Node* n) {
-        Node* s = GetSibling(n);
+    private void DeleteCase6(Node node) {
+        Node s = node.getSibling();
 
-        s->color = n->parent->color;
-        n->parent->color = BLACK;
+        s.setColor(node.getParent().isColor());
+        node.getParent().setColor(false);
 
-        if (n == n->parent->left) {
-            s->right->color = BLACK;
-            RotateLeft(n->parent);
+        if(node == node.getParent().getLeft()) {
+            s.getRight().setColor(false);
+            rotateLeft(node.getParent());
         } else {
-            s->left->color = BLACK;
-            RotateRight(n->parent);
+            s.getLeft().setColor(false);
+            rotateRight(node.getParent());
         }
     }
-*/
+}

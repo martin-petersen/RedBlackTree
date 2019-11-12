@@ -224,7 +224,7 @@ public class Node {
     }
 }
 
-/*    void ReplaceNode(Node* n, Node* child) {
+/*REPLACE DOS NODES -> void ReplaceNode(Node* n, Node* child) {
         child->parent = n->parent;
         if (n == n->parent->left) {
             n->parent->left = child;
@@ -233,7 +233,7 @@ public class Node {
         }
     }
 
-    void DeleteOneChild(Node* n) {
+MÉTODO DE REMOÇÃO -> void DeleteOneChild(Node* n) {
         // Precondition: n has at most one non-leaf child.
         Node* child = (n->right == nullptr) ? n->left : n->right;
         assert(child);
@@ -249,6 +249,7 @@ public class Node {
         free(n);
     }
 
+DAQUI PRA BAIXO SÃO AS VALIDAÇÕES PARA O TIPO DE NÓ A SER DELETADO
     void DeleteCase1(Node* n) {
         if (n->parent != nullptr) {
             DeleteCase2(n);

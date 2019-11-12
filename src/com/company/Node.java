@@ -91,7 +91,7 @@ public class Node {
                 this.getRight().insert(node);
             }
         }
-        insertCasex(node);
+        insertCaseX(node);
     }
 
     public Node search(int value) {
@@ -118,7 +118,7 @@ public class Node {
 
     }
 
-    private void insertCasex (Node node) {
+    private void insertCaseX (Node node) {
         if(node.getParent() == null) {
             insertCaseOne(node);
         }
@@ -144,7 +144,7 @@ public class Node {
         node.getParent().setColor(false);
         node.getUncle().setColor(false);
         node.getGrandParent().setColor(true);
-        insertCasex(node.getGrandParent());
+        insertCaseX(node.getGrandParent());
     }
 
     private void insertCaseFour1(Node node) {
@@ -183,7 +183,7 @@ public class Node {
         assert novo != null;
         node.setRight(node.getLeft());
         novo.setLeft(node);
-        node.setParent(node);
+        node.setParent(novo);
 
         if(node.getRight() != null) {
             node.getRight().setParent(node);
@@ -223,3 +223,116 @@ public class Node {
         novo.setParent(p);
     }
 }
+
+/*    void ReplaceNode(Node* n, Node* child) {
+        child->parent = n->parent;
+        if (n == n->parent->left) {
+            n->parent->left = child;
+        } else {
+            n->parent->right = child;
+        }
+    }
+
+    void DeleteOneChild(Node* n) {
+        // Precondition: n has at most one non-leaf child.
+        Node* child = (n->right == nullptr) ? n->left : n->right;
+        assert(child);
+
+        ReplaceNode(n, child);
+        if (n->color == BLACK) {
+            if (child->color == RED) {
+                child->color = BLACK;
+            } else {
+                DeleteCase1(child);
+            }
+        }
+        free(n);
+    }
+
+    void DeleteCase1(Node* n) {
+        if (n->parent != nullptr) {
+            DeleteCase2(n);
+        }
+    }
+
+    void DeleteCase2(Node* n) {
+        Node* s = GetSibling(n);
+
+        if (s->color == RED) {
+            n->parent->color = RED;
+            s->color = BLACK;
+            if (n == n->parent->left) {
+                RotateLeft(n->parent);
+            } else {
+                RotateRight(n->parent);
+            }
+        }
+        DeleteCase3(n);
+    }
+
+    void DeleteCase3(Node* n) {
+        Node* s = GetSibling(n);
+
+        if ((n->parent->color == BLACK) && (s->color == BLACK) &&
+                (s->left->color == BLACK) && (s->right->color == BLACK)) {
+            s->color = RED;
+            DeleteCase1(n->parent);
+        } else {
+            DeleteCase4(n);
+        }
+    }
+
+    void DeleteCase4(Node* n) {
+        Node* s = GetSibling(n);
+
+        if ((n->parent->color == RED) && (s->color == BLACK) &&
+                (s->left->color == BLACK) && (s->right->color == BLACK)) {
+            s->color = RED;
+            n->parent->color = BLACK;
+        } else {
+            DeleteCase5(n);
+        }
+    }
+
+    void DeleteCase5(Node* n) {
+        Node* s = GetSibling(n);
+
+        // This if statement is trivial, due to case 2 (even though case 2 changed
+        // the sibling to a sibling's child, the sibling's child can't be red, since
+        // no red parent can have a red child).
+        if (s->color == BLACK) {
+            // The following statements just force the red to be on the left of the
+            // left of the parent, or right of the right, so case six will rotate
+            // correctly.
+            if ((n == n->parent->left) && (s->right->color == BLACK) &&
+                    (s->left->color == RED)) {
+                // This last test is trivial too due to cases 2-4.
+                s->color = RED;
+                s->left->color = BLACK;
+                RotateRight(s);
+            } else if ((n == n->parent->right) && (s->left->color == BLACK) &&
+                    (s->right->color == RED)) {
+                // This last test is trivial too due to cases 2-4.
+                s->color = RED;
+                s->right->color = BLACK;
+                RotateLeft(s);
+            }
+        }
+        DeleteCase6(n);
+    }
+
+    void DeleteCase6(Node* n) {
+        Node* s = GetSibling(n);
+
+        s->color = n->parent->color;
+        n->parent->color = BLACK;
+
+        if (n == n->parent->left) {
+            s->right->color = BLACK;
+            RotateLeft(n->parent);
+        } else {
+            s->left->color = BLACK;
+            RotateRight(n->parent);
+        }
+    }
+*/
